@@ -11,7 +11,7 @@ import xmind
 from dateutil.parser import parse as parse_datetime_str
 from jinja2 import Template
 
-from .checking import SUPPORTED_IDS
+from .checking import supported_ids
 from .result import QueryStatus
 from .sites import MaigretDatabase
 from .utils import is_country_tag, CaseConverter, enrich_link_str
@@ -99,7 +99,7 @@ class MaigretGraph:
         node_name = f'{key}: {value}'
 
         params = self.other_params
-        if key in SUPPORTED_IDS:
+        if key in supported_ids:
             params = self.username_params
         elif value.startswith('http'):
             params = self.site_params
@@ -186,7 +186,7 @@ def save_graph_report(filename: str, username_results: list, db: MaigretDatabase
                         graph.link(parent_node, ids_data_name)
 
                         # check for username
-                        if 'username' in k or k in SUPPORTED_IDS:
+                        if 'username' in k or k in supported_ids:
                             new_username_node_name = graph.add_node('username', v)
                             graph.link(ids_data_name, new_username_node_name)
 
@@ -367,7 +367,7 @@ def generate_report_context(username_results: list):
     countries_lists = list(filter(lambda x: is_country_tag(x[0]), tags.items()))
     interests_list = list(filter(lambda x: not is_country_tag(x[0]), tags.items()))
 
-    filtered_supposed_data = filter_supposed_data(supposed_data)
+    filteredSupposedData = filter_supposed_data(supposed_data)
 
     return {
         "username": first_username,
@@ -377,7 +377,7 @@ def generate_report_context(username_results: list):
         "first_seen": first_seen,
         "interests_tuple_list": tuple_sort(interests_list),
         "countries_tuple_list": tuple_sort(countries_lists),
-        "supposed_data": filtered_supposed_data,
+        "supposed_data": filteredSupposedData,
         "generated_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
     }
 

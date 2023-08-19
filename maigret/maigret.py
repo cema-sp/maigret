@@ -76,29 +76,29 @@ def extract_ids_from_page(url, logger, timeout=5) -> dict:
         logger.warning(e)
 
     for req in reqs:
-        url, headers = req
-        print(f'Scanning webpage by URL {url}...')
-        page, _ = parse(url, cookies_str='', headers=headers, timeout=timeout)
-        logger.debug(page)
-        info = extract(page)
-        if not info:
-            print('Nothing extracted')
-        else:
-            print(get_dict_ascii_tree(info.items(), new_line=False), ' ')
-        for k, v in info.items():
-            # TODO: merge with the same functionality in checking module
-            if 'username' in k and not 'usernames' in k:
-                results[v] = 'username'
-            elif 'usernames' in k:
-                try:
-                    tree = ast.literal_eval(v)
-                    if type(tree) == list:
-                        for n in tree:
-                         results[n] = 'username'
-                except Exception as e:
-                    logger.warning(e)
-            if k in SUPPORTED_IDS:
-                results[v] = k
+            url, headers = req
+            print(f'Scanning webpage by URL {url}...')
+            page, _ = parse(url, cookies_str='', headers=headers, timeout=timeout)
+            logger.debug(page)
+            info = extract(page)
+            if not info:
+                print('Nothing extracted')
+            else:
+                print(get_dict_ascii_tree(info.items(), new_line=False), ' ')
+            for k, v in info.items():
+                # TODO: merge with the same functionality in checking module
+                if 'username' in k and not 'usernames' in k:
+                    results[v] = 'username'
+                elif 'usernames' in k:
+                    try:
+                        tree = ast.literal_eval(v)
+                        if type(tree) == list:
+                            for n in tree:
+                             results[n] = 'username'
+                    except Exception as e:
+                        logger.warning(e)
+                if k in SUPPORTED_IDS:
+                    results[v] = k
 
     return results
 

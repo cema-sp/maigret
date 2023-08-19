@@ -37,7 +37,7 @@ from .types import QueryOptions, QueryResultWrapper
 from .utils import get_random_user_agent, ascii_data_display
 
 
-SUPPORTED_IDS = (
+supported_ids = (
     "username",
     "yandex_public_id",
     "gaia_id",
@@ -385,7 +385,7 @@ def process_site_result(
                              new_usernames[n] = "username"
                     except Exception as e:
                         logger.warning(e)
-                if k in SUPPORTED_IDS:
+                if k in supported_ids:
                     new_usernames[v] = k
 
             results_info["ids_usernames"] = new_usernames

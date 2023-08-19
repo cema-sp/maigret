@@ -84,11 +84,8 @@ TEMPORARY_ERRORS_TYPES = [
     'Connection lost',
 ]
 
-THRESHOLD = 3  # percent
-
-
 def is_important(err_data):
-    return err_data['perc'] >= THRESHOLD
+    return err_data['perc'] >= 3
 
 
 def is_permanent(err_type):
