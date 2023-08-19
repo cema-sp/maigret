@@ -458,7 +458,7 @@ class MaigretDatabase:
         enabled_count = total_count - disabled_count
         enabled_perc = round(100 * enabled_count / total_count, 2)
         output += (
-            f"Enabled/total sites: {enabled_count}/{total_count} = {enabled_perc}%\n\n"
+                f"Enabled/total sites: {enabled_count}/{total_count} = {enabled_perc}%\n\n"
         )
 
         checks_perc = round(100 * message_checks_one_factor / enabled_count, 2)
